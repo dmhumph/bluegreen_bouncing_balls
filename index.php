@@ -18,7 +18,7 @@
     <?php
     $ballsCount = 10;
     for ($i = 0; $i < $ballsCount; $i++) {
-        $x = rand(0, 700);
+        $x = rand(0, 900);
         $y = rand(0, 700);
         echo "<div class='ball' style='top: {$y}px; left: {$x}px;'></div>";
     }
