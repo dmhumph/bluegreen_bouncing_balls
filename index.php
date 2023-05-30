@@ -1,70 +1,73 @@
+<?php
+// index.php
+
+$ballsCount = 10;
+
+// Generate random positions and velocities for the balls
+$balls = [];
+for ($i = 0; $i < $ballsCount; $i++) {
+    $ball = [
+        'x' => rand(0, 800),
+        'y' => rand(0, 600),
+        'vx' => rand(-5, 5),
+        'vy' => rand(-5, 5)
+    ];
+    $balls[] = $ball;
+}
+?>
+
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Blue Bouncing Balls</title>
     <style>
-        #canvas {
-            position: relative;
-            width: 500px;
-            height: 300px;
-            border: 1px solid #000;
-        }
-
         .ball {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            background-color: blue;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
+            background-color: blue;
+            position: absolute;
         }
     </style>
-</head>
-<body>
-    <div id="canvas">
-        <?php
-        $numBalls = 10; // Number of balls to display
-
-        for ($i = 0; $i < $numBalls; $i++) {
-            $left = rand(0, 450); // Random left position
-            $top = rand(0, 250); // Random top position
-
-            echo '<div class="ball" style="left: ' . $left . 'px; top: ' . $top . 'px;"></div>';
-        }
-        ?>
-    </div>
-
     <script>
-        var balls = document.getElementsByClassName('ball');
+        // Function to update the positions of the balls
+        function updatePositions() {
+            var balls = <?php echo json_encode($balls); ?>;
 
-        function animateBalls() {
-            for (var i = 0; i < balls.length; i++) {
-                var ball = balls[i];
-                var left = parseInt(ball.style.left, 10);
-                var top = parseInt(ball.style.top, 10);
-                var xSpeed = Math.random() * 10 - 5; // Random horizontal speed
-                var ySpeed = Math.random() * 10 - 5; // Random vertical speed
+            balls.forEach(function(ball) {
+                ball.x += ball.vx;
+                ball.y += ball.vy;
 
-                // Update ball position
-                left += xSpeed;
-                top += ySpeed;
-
-                // Check boundaries
-                if (left <= 0 || left >= 450) {
-                    xSpeed = -xSpeed; // Reverse horizontal speed
+                // Reverse direction if ball hits the boundaries
+                if (ball.x < 0 || ball.x > 770) {
+                    ball.vx = -ball.vx;
                 }
-                if (top <= 0 || top >= 250) {
-                    ySpeed = -ySpeed; // Reverse vertical speed
+                if (ball.y < 0 || ball.y > 570) {
+                    ball.vy = -ball.vy;
                 }
+            });
 
-                // Update ball style
-                ball.style.left = left + 'px';
-                ball.style.top = top + 'px';
-            }
+            // Update the positions of the balls in the DOM
+            balls.forEach(function(ball, index) {
+                var ballElement = document.getElementById('ball-' + index);
+                ballElement.style.left = ball.x + 'px';
+                ballElement.style.top = ball.y + 'px';
+            });
 
-            requestAnimationFrame(animateBalls);
+            // Repeat the update after a delay
+            setTimeout(updatePositions, 30);
         }
 
-        animateBalls();
+        // Call the updatePositions function when the page loads
+        window.onload = updatePositions;
     </script>
+</head>
+
+<body>
+    <?php foreach ($balls as $index => $ball): ?>
+        <div id="ball-<?php echo $index; ?>" class="ball" style="top: <?php echo $ball['y']; ?>px; left: <?php echo $ball['x']; ?>px;"></div>
+    <?php endforeach; ?>
 </body>
+
 </html>
