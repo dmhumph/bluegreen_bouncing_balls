@@ -1,22 +1,3 @@
-<?php
-// index.php
-//test webhook
-
-$ballsCount = 10;
-
-// Generate random positions and velocities for the balls
-$balls = [];
-for ($i = 0; $i < $ballsCount; $i++) {
-    $ball = [
-        'x' => rand(0, 800),
-        'y' => rand(0, 600),
-        'vx' => rand(-5, 5),
-        'vy' => rand(-5, 5)
-    ];
-    $balls[] = $ball;
-}
-?>
-
 <!DOCTYPE html>
 <html>
 
@@ -34,38 +15,49 @@ for ($i = 0; $i < $ballsCount; $i++) {
 </head>
 
 <body>
-    <?php foreach ($balls as $index => $ball): ?>
-        <div id="ball-<?php echo $index; ?>" class="ball" style="top: <?php echo $ball['y']; ?>px; left: <?php echo $ball['x']; ?>px;"></div>
-    <?php endforeach; ?>
+    <?php
+    $ballsCount = 10;
+    for ($i = 0; $i < $ballsCount; $i++) {
+        $x = rand(0, 800);
+        $y = rand(0, 600);
+        echo "<div class='ball' style='top: {$y}px; left: {$x}px;'></div>";
+    }
+    ?>
 
     <script>
         // Function to update the positions of the balls
         function updatePositions() {
-            var balls = <?php echo json_encode($balls); ?>;
+            var balls = document.querySelectorAll('.ball');
 
-            balls.forEach(function(ball, index) {
-                ball.x += ball.vx;
-                ball.y += ball.vy;
+            balls.forEach(function(ball) {
+                var x = parseInt(ball.style.left);
+                var y = parseInt(ball.style.top);
+                var vx = Math.floor(Math.random() * 5) - 2;
+                var vy = Math.floor(Math.random() * 5) - 2;
+
+                x += vx;
+                y += vy;
 
                 // Reverse direction if ball hits the boundaries
-                if (ball.x < 0 || ball.x > 770) {
-                    ball.vx = -ball.vx;
+                if (x < 0 || x > 770) {
+                    vx = -vx;
                 }
-                if (ball.y < 0 || ball.y > 570) {
-                    ball.vy = -ball.vy;
+                if (y < 0 || y > 570) {
+                    vy = -vy;
                 }
 
-                // Update the positions of the balls in the DOM
-                var ballElement = document.getElementById('ball-' + index);
-                ballElement.style.left = ball.x + 'px';
-                ballElement.style.top = ball.y + 'px';
+                ball.style.left = x + 'px';
+                ball.style.top = y + 'px';
             });
+
+            // Repeat the update after a delay
+            requestAnimationFrame(updatePositions);
         }
 
-        // Call the updatePositions function when the DOM content is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            setInterval(updatePositions, 30);
-        });
+        // Call the updatePositions function when the page loads
+        window.onload = function() {
+            requestAnimationFrame(updatePositions);
+        };
     </script>
 </body>
 
