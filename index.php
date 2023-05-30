@@ -14,21 +14,6 @@ for ($i = 0; $i < $ballsCount; $i++) {
     ];
     $balls[] = $ball;
 }
-
-// Update the positions of the balls
-foreach ($balls as &$ball) {
-    $ball['x'] += $ball['vx'];
-    $ball['y'] += $ball['vy'];
-
-    // Reverse direction if ball hits the boundaries
-    if ($ball['x'] < 0 || $ball['x'] > 770) {
-        $ball['vx'] = -$ball['vx'];
-    }
-    if ($ball['y'] < 0 || $ball['y'] > 570) {
-        $ball['vy'] = -$ball['vy'];
-    }
-}
-unset($ball);
 ?>
 
 <!DOCTYPE html>
@@ -56,8 +41,20 @@ unset($ball);
         // Function to update the positions of the balls
         function updatePositions() {
             var balls = <?php echo json_encode($balls); ?>;
-
+            
             balls.forEach(function(ball, index) {
+                ball.x += ball.vx;
+                ball.y += ball.vy;
+
+                // Reverse direction if ball hits the boundaries
+                if (ball.x < 0 || ball.x > 770) {
+                    ball.vx = -ball.vx;
+                }
+                if (ball.y < 0 || ball.y > 570) {
+                    ball.vy = -ball.vy;
+                }
+                
+                // Update the positions of the balls in the DOM
                 var ballElement = document.getElementById('ball-' + index);
                 ballElement.style.left = ball.x + 'px';
                 ballElement.style.top = ball.y + 'px';
