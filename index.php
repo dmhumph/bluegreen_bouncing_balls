@@ -10,6 +10,7 @@
             border-radius: 50%;
             background-color: blue;
             position: absolute;
+            transition: top 0.3s, left 0.3s; /* CSS transitions for smooth movement */
         }
     </style>
 </head>
@@ -18,8 +19,8 @@
     <?php
     $ballsCount = 10;
     for ($i = 0; $i < $ballsCount; $i++) {
-        $x = rand(0, 999);
-        $y = rand(0, 700);
+        $x = rand(0, 800);
+        $y = rand(0, 600);
         echo "<div class='ball' style='top: {$y}px; left: {$x}px;'></div>";
     }
     ?>
