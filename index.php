@@ -49,10 +49,10 @@
                 y += vy;
 
                 // Reverse direction if ball hits the boundaries
-                if (x < 0 || x > 100) {
+                if (x < 0 || x > 100 - parseInt(ball.style.width)) {
                     vx = -vx;
                 }
-                if (y < 0 || y > 100) {
+                if (y < 0 || y > 100 - parseInt(ball.style.height)) {
                     vy = -vy;
                 }
 
