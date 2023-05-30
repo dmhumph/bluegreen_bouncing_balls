@@ -40,13 +40,13 @@
             var balls = document.querySelectorAll('.ball');
             var maxX = window.innerWidth - 30; // Adjusted for ball width
             var maxY = window.innerHeight - 30; // Adjusted for ball height
+            var gravity = 0.2; // Adjust the gravity force as needed
 
             balls.forEach(function(ball) {
                 var x = parseInt(ball.style.left) || Math.floor(Math.random() * maxX);
                 var y = parseInt(ball.style.top) || Math.floor(Math.random() * maxY);
                 var vx = Math.floor(Math.random() * 5) - 2;
                 var vy = Math.floor(Math.random() * 5) - 2;
-                var gravity = 0.2; // Adjust the gravity force as needed
 
                 x += vx;
                 y += vy;
@@ -64,7 +64,7 @@
                     vy = -vy;
                 } else if (y > maxY) {
                     y = maxY;
-                    vy = -vy * (1 - gravity); // Apply a portion of the velocity to simulate bouncing
+                    vy = -Math.abs(vy) * (1 - gravity); // Reverse the absolute value of vy to simulate bouncing
                 }
 
                 ball.style.left = x + 'px';
