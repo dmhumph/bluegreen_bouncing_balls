@@ -35,7 +35,7 @@ for ($i = 0; $i < $ballsCount; $i++) {
         function updatePositions() {
             var balls = <?php echo json_encode($balls); ?>;
 
-            balls.forEach(function(ball) {
+            balls.forEach(function(ball, index) {
                 ball.x += ball.vx;
                 ball.y += ball.vy;
 
@@ -46,10 +46,8 @@ for ($i = 0; $i < $ballsCount; $i++) {
                 if (ball.y < 0 || ball.y > 570) {
                     ball.vy = -ball.vy;
                 }
-            });
 
-            // Update the positions of the balls in the DOM
-            balls.forEach(function(ball, index) {
+                // Update the positions of the balls in the DOM
                 var ballElement = document.getElementById('ball-' + index);
                 ballElement.style.left = ball.x + 'px';
                 ballElement.style.top = ball.y + 'px';
