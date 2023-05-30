@@ -30,7 +30,7 @@
     for ($i = 0; $i < $ballsCount; $i++) {
         $x = rand(30, 70); // Adjusted to keep some padding from the edges
         $y = rand(30, 70); // Adjusted to keep some padding from the edges
-        echo "<div class='ball' style='top: {$y}%; left: {$x}%;'></div>";
+        echo "<div class='ball'></div>";
     }
     ?>
 
@@ -38,19 +38,17 @@
         // Function to update the positions of the balls
         function updatePositions() {
             var balls = document.querySelectorAll('.ball');
+            var maxX = window.innerWidth - 30; // Adjusted for ball width
+            var maxY = window.innerHeight - 30; // Adjusted for ball height
 
             balls.forEach(function(ball) {
-                var x = parseInt(ball.style.left);
-                var y = parseInt(ball.style.top);
+                var x = parseInt(ball.style.left) || Math.floor(Math.random() * maxX);
+                var y = parseInt(ball.style.top) || Math.floor(Math.random() * maxY);
                 var vx = Math.floor(Math.random() * 5) - 2;
                 var vy = Math.floor(Math.random() * 5) - 2;
 
                 x += vx;
                 y += vy;
-
-                // Adjusted boundaries to keep the balls within the visible area
-                var maxX = 100 - parseInt(ball.style.width);
-                var maxY = 100 - parseInt(ball.style.height);
 
                 if (x < 0) {
                     x = 0;
@@ -68,8 +66,8 @@
                     vy = -vy;
                 }
 
-                ball.style.left = x + '%';
-                ball.style.top = y + '%';
+                ball.style.left = x + 'px';
+                ball.style.top = y + 'px';
             });
 
             // Repeat the update after a delay
