@@ -61,8 +61,10 @@ for ($i = 0; $i < $ballsCount; $i++) {
             });
         }
 
-        // Call the updatePositions function repeatedly
-        setInterval(updatePositions, 30);
+        // Call the updatePositions function when the DOM content is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            setInterval(updatePositions, 30);
+        });
     </script>
 </body>
 
