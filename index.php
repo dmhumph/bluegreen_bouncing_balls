@@ -1,6 +1,5 @@
 <?php
 // index.php
-//Test Webhook
 
 $ballsCount = 10;
 
@@ -31,13 +30,6 @@ for ($i = 0; $i < $ballsCount; $i++) {
             position: absolute;
         }
     </style>
-</head>
-
-<body>
-    <?php foreach ($balls as $index => $ball): ?>
-        <div id="ball-<?php echo $index; ?>" class="ball" style="top: <?php echo $ball['y']; ?>px; left: <?php echo $ball['x']; ?>px;"></div>
-    <?php endforeach; ?>
-
     <script>
         // Function to update the positions of the balls
         function updatePositions() {
@@ -60,14 +52,17 @@ for ($i = 0; $i < $ballsCount; $i++) {
                 ballElement.style.left = ball.x + 'px';
                 ballElement.style.top = ball.y + 'px';
             });
-
-            // Repeat the update after a delay
-            setTimeout(updatePositions, 30);
         }
 
-        // Call the updatePositions function when the page loads
-        window.onload = updatePositions;
+        // Call the updatePositions function repeatedly
+        setInterval(updatePositions, 30);
     </script>
+</head>
+
+<body>
+    <?php foreach ($balls as $index => $ball): ?>
+        <div id="ball-<?php echo $index; ?>" class="ball" style="top: <?php echo $ball['y']; ?>px; left: <?php echo $ball['x']; ?>px;"></div>
+    <?php endforeach; ?>
 </body>
 
 </html>
