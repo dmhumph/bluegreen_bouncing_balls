@@ -46,6 +46,7 @@
                 var y = parseInt(ball.style.top) || Math.floor(Math.random() * maxY);
                 var vx = Math.floor(Math.random() * 5) - 2;
                 var vy = Math.floor(Math.random() * 5) - 2;
+                var gravity = 0.2; // Adjust the gravity force as needed
 
                 x += vx;
                 y += vy;
@@ -63,16 +64,14 @@
                     vy = -vy;
                 } else if (y > maxY) {
                     y = maxY;
-                    vy = -vy;
+                    vy = -vy * (1 - gravity); // Apply a portion of the velocity to simulate bouncing
                 }
 
                 ball.style.left = x + 'px';
                 ball.style.top = y + 'px';
 
-                // Bounce off the bottom of the screen
-                if (y === maxY) {
-                    vy = -vy;
-                }
+                // Apply gravity
+                vy += gravity;
             });
 
             // Repeat the update after a delay
