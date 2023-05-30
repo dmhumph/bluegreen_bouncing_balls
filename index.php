@@ -28,8 +28,8 @@
     <?php
     $ballsCount = 10;
     for ($i = 0; $i < $ballsCount; $i++) {
-        $x = rand(0, 100);
-        $y = rand(0, 100);
+        $x = rand(30, 70); // Adjusted to keep some padding from the edges
+        $y = rand(30, 70); // Adjusted to keep some padding from the edges
         echo "<div class='ball' style='top: {$y}%; left: {$x}%;'></div>";
     }
     ?>
@@ -48,11 +48,23 @@
                 x += vx;
                 y += vy;
 
-                // Reverse direction if ball hits the boundaries
-                if (x < 0 || x > 100 - parseInt(ball.style.width)) {
+                // Adjusted boundaries to keep the balls within the visible area
+                var maxX = 100 - parseInt(ball.style.width);
+                var maxY = 100 - parseInt(ball.style.height);
+
+                if (x < 0) {
+                    x = 0;
+                    vx = -vx;
+                } else if (x > maxX) {
+                    x = maxX;
                     vx = -vx;
                 }
-                if (y < 0 || y > 100 - parseInt(ball.style.height)) {
+
+                if (y < 0) {
+                    y = 0;
+                    vy = -vy;
+                } else if (y > maxY) {
+                    y = maxY;
                     vy = -vy;
                 }
 
