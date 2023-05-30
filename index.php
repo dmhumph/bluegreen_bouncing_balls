@@ -4,6 +4,15 @@
 <head>
     <title>Blue Bouncing Balls</title>
     <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
         .ball {
             width: 30px;
             height: 30px;
@@ -19,9 +28,9 @@
     <?php
     $ballsCount = 10;
     for ($i = 0; $i < $ballsCount; $i++) {
-        $x = rand(0, 800);
-        $y = rand(0, 600);
-        echo "<div class='ball' style='top: {$y}px; left: {$x}px;'></div>";
+        $x = rand(0, 100);
+        $y = rand(0, 100);
+        echo "<div class='ball' style='top: {$y}%; left: {$x}%;'></div>";
     }
     ?>
 
@@ -40,15 +49,15 @@
                 y += vy;
 
                 // Reverse direction if ball hits the boundaries
-                if (x < 0 || x > 770) {
+                if (x < 0 || x > 100) {
                     vx = -vx;
                 }
-                if (y < 0 || y > 570) {
+                if (y < 0 || y > 100) {
                     vy = -vy;
                 }
 
-                ball.style.left = x + 'px';
-                ball.style.top = y + 'px';
+                ball.style.left = x + '%';
+                ball.style.top = y + '%';
             });
 
             // Repeat the update after a delay
