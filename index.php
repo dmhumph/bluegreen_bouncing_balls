@@ -68,6 +68,11 @@
 
                 ball.style.left = x + 'px';
                 ball.style.top = y + 'px';
+
+                // Bounce off the bottom of the screen
+                if (y === maxY) {
+                    vy = -vy;
+                }
             });
 
             // Repeat the update after a delay
